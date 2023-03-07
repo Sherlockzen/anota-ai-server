@@ -27,7 +27,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const data_json_1 = __importDefault(require("./data.json"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const ajv_1 = __importDefault(require("ajv"));
@@ -84,12 +83,12 @@ app.post("/api/notes", (req, res) => {
 });
 app.put("/api/notes/:id", (req, res) => {
     const noteId = Number(req.params.id);
-    const noteIndex = data_json_1.default.notes.findIndex((note) => note.id === noteId);
+    const file = readFile();
+    const noteIndex = file.notes.findIndex((note) => note.id === noteId);
     if (noteIndex === -1) {
         res.status(404).json({ error: "Nota não encontrada" });
     }
     else {
-        const file = readFile();
         const newNote = req.body;
         newNote.id = noteId;
         file.notes[noteIndex] = newNote;
@@ -99,12 +98,12 @@ app.put("/api/notes/:id", (req, res) => {
 });
 app.delete("/api/notes/:id", (req, res) => {
     const noteId = Number(req.params.id);
-    const noteIndex = data_json_1.default.notes.findIndex((note) => note.id === noteId);
+    const file = readFile();
+    const noteIndex = file.notes.findIndex((note) => note.id === noteId);
     if (noteIndex === -1) {
         res.status(404).json("Nota não encontrada");
     }
     else {
-        const file = readFile();
         file.notes.splice(noteIndex, 1);
         writeFile(file);
         res.status(200).json("Nota deletada com sucesso!");

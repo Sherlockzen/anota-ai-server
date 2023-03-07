@@ -77,11 +77,11 @@ app.post("/api/notes", (req, res) => {
 
 app.put("/api/notes/:id", (req, res) => {
   const noteId = Number(req.params.id);
-  const noteIndex = data.notes.findIndex((note) => note.id === noteId);
+  const file = readFile();
+  const noteIndex = file.notes.findIndex((note) => note.id === noteId);
   if (noteIndex === -1) {
     res.status(404).json({ error: "Nota não encontrada" });
   } else {
-    const file = readFile();
     const newNote = req.body;
     newNote.id = noteId;
     file.notes[noteIndex] = newNote;
@@ -92,11 +92,11 @@ app.put("/api/notes/:id", (req, res) => {
 
 app.delete("/api/notes/:id", (req, res) => {
   const noteId = Number(req.params.id);
-  const noteIndex = data.notes.findIndex((note) => note.id === noteId);
+  const file = readFile();
+  const noteIndex = file.notes.findIndex((note) => note.id === noteId);
   if (noteIndex === -1) {
     res.status(404).json("Nota não encontrada");
   } else {
-    const file = readFile();
     file.notes.splice(noteIndex, 1);
     writeFile(file);
     res.status(200).json("Nota deletada com sucesso!");
