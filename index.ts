@@ -43,8 +43,13 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.get("/api/notes", (req, res) => {
+  const limit = parseInt(req.query.limit as string, 10) || 1;
+  const pagination = (limit: number, arr) => {
+    return arr.slice(0, limit);
+  };
+  const result = pagination(limit, readFile().notes);
   res.send(
-    readFile().notes.map((note: typeof data.notes[number]) => {
+    result.map((note: typeof data.notes[number]) => {
       return {
         id: note.id,
         title: note.title,
@@ -53,6 +58,24 @@ app.get("/api/notes", (req, res) => {
     })
   );
 });
+
+//List of pokemons with pagination
+// app.get("/api/notes?limit:limit", (req, res) => {
+//   const file = readFile().notes;
+//   const pagination = (limit: number, arr) => {
+//     return arr.slice(0, limit);
+//   };
+//   console.log(pagination(Number(req.params.limit), file.notes));
+//   res.send(
+//     pagination(Number(req.params.limit), file).map((note) => {
+//       return {
+//         id: note.id,
+//         title: note.title,
+//         note: note.note,
+//       };
+//     })
+//   );
+// });
 
 interface NewNote {
   id: number;

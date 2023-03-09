@@ -59,7 +59,12 @@ const corsOptions = {
 app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.json());
 app.get("/api/notes", (req, res) => {
-    res.send(readFile().notes.map((note) => {
+    const limit = parseInt(req.query.limit, 10) || 1;
+    const pagination = (limit, arr) => {
+        return arr.slice(0, limit);
+    };
+    const result = pagination(limit, readFile().notes);
+    res.send(result.map((note) => {
         return {
             id: note.id,
             title: note.title,

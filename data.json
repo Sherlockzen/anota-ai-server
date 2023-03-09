@@ -1,1 +1,7 @@
-{"notes":[{"id":1,"title":"Mercado hoje","note":"Comprar suco e carne"},{"id":2,"title":"Lixo","note":"Jogar o lixo fora as 17h"}]}
+{
+  "notes": [
+    { "id": 1, "title": "Mercado hoje", "note": "Comprar suco e carne" },
+    { "id": 2, "title": "Lixo", "note": "Jogar o lixo fora as 17h" },
+    { "title": "Estudar", "note": "Aprender sobre REST API", "id": 3 }
+  ]
+}
