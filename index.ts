@@ -59,24 +59,6 @@ app.get("/api/notes", (req, res) => {
   );
 });
 
-//List of pokemons with pagination
-// app.get("/api/notes?limit:limit", (req, res) => {
-//   const file = readFile().notes;
-//   const pagination = (limit: number, arr) => {
-//     return arr.slice(0, limit);
-//   };
-//   console.log(pagination(Number(req.params.limit), file.notes));
-//   res.send(
-//     pagination(Number(req.params.limit), file).map((note) => {
-//       return {
-//         id: note.id,
-//         title: note.title,
-//         note: note.note,
-//       };
-//     })
-//   );
-// });
-
 interface NewNote {
   id: number;
   title: string;
@@ -101,7 +83,7 @@ app.post("/api/notes", (req, res) => {
 app.put("/api/notes/:id", (req, res) => {
   const noteId = Number(req.params.id);
   const file = readFile();
-  const noteIndex = file.notes.findIndex((note) => note.id === noteId);
+  const noteIndex = file.notes.findIndex((note: NewNote) => note.id === noteId);
   if (noteIndex === -1) {
     res.status(404).json({ error: "Nota não encontrada" });
   } else {
@@ -116,7 +98,7 @@ app.put("/api/notes/:id", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
   const noteId = Number(req.params.id);
   const file = readFile();
-  const noteIndex = file.notes.findIndex((note) => note.id === noteId);
+  const noteIndex = file.notes.findIndex((note: NewNote) => note.id === noteId);
   if (noteIndex === -1) {
     res.status(404).json("Nota não encontrada");
   } else {
